@@ -115,7 +115,7 @@ export default function CloserForm() {
       const payload = {
         closerName: formData.closerName,
         homeownerName: formData.homeownerName,
-        phone: formData.phone,
+        phone: `+1${formData.phone}`,
         showUp: formData.showUp,
         noShowReason: formData.showUp === false ? (formData.noShowReason || null) : null,
         outcome: formData.showUp === true ? formData.outcome : null,
@@ -263,23 +263,40 @@ export default function CloserForm() {
                 <label className="block text-sm font-bold uppercase tracking-wider mb-2" style={{ color: '#78716c' }}>
                   Phone (Identifier)
                 </label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="(555) 123-4567"
-                  className="w-full px-4 py-3 rounded text-sm transition-all outline-none"
+                <div
+                  className="flex items-center w-full rounded text-sm transition-all overflow-hidden"
                   style={{ border: '2px solid #e8e4df' }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = '#b5651d';
-                    e.target.style.boxShadow = '0 0 0 3px rgba(181,101,29,0.15)';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = '#e8e4df';
-                    e.target.style.boxShadow = 'none';
-                  }}
-                />
+                >
+                  <span
+                    className="px-3 py-3 font-bold text-sm select-none flex-shrink-0"
+                    style={{ backgroundColor: '#f5f5f4', color: '#2a1f1b', borderRight: '2px solid #e8e4df' }}
+                  >
+                    +1
+                  </span>
+                  <input
+                    type="tel"
+                    required
+                    inputMode="numeric"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      setFormData({ ...formData, phone: digits });
+                    }}
+                    placeholder="2282430122"
+                    className="w-full px-3 py-3 text-sm outline-none"
+                    style={{ border: 'none' }}
+                    onFocus={(e) => {
+                      const container = e.target.parentElement as HTMLElement;
+                      container.style.borderColor = '#b5651d';
+                      container.style.boxShadow = '0 0 0 3px rgba(181,101,29,0.15)';
+                    }}
+                    onBlur={(e) => {
+                      const container = e.target.parentElement as HTMLElement;
+                      container.style.borderColor = '#e8e4df';
+                      container.style.boxShadow = 'none';
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
