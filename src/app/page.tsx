@@ -116,7 +116,7 @@ export default function CloserForm() {
         closerName: formData.closerName,
         homeownerName: formData.homeownerName,
         phone: `+1${formData.phone}`,
-        showUp: formData.showUp,
+        showUp: formData.showUp === true ? 'YES' : 'NO',
         noShowReason: formData.showUp === false ? (formData.noShowReason || null) : null,
         outcome: formData.showUp === true ? formData.outcome : null,
         closeDetails: formData.outcome === 'Close' ? {
